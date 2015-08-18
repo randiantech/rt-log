@@ -1,0 +1,13 @@
+{
+  "codes": {
+    "I0000": "Unknown error",
+    "I0001": "Token successfully decoded: %0",
+    "I0002": "No profiles found",
+    "I0003": "%0 %1",
+    "E0001": "Missed x-access-token header",
+    "E0002": "Authentication token has expired: %0",
+    "E0003": "Invalid authentication token",
+    "E0004": "Profile could not be saved: %0",
+    "E0005": "Invalid user and/or password"
+  }
+}

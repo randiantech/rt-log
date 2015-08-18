@@ -3,7 +3,9 @@ var stringify = require('json-stringify-safe');
 var environment = process.env.RT_ENV || 'dev';
 
 var CONFIG_FILE_PATH = './config.'+ environment +'.json';
+var APPLICATION_FILE_PATH = './application.json';
 var configFile = require(CONFIG_FILE_PATH);
+var applicationFile = require(APPLICATION_FILE_PATH);
 
 
 function setup(){
@@ -35,7 +37,7 @@ function log(code, req, params){
     var isoDate = new Date();
     isoDate = isoDate.toISOString();
     req ? req = stringify(_serializeRequest(req)) : req = 'no request';
-    var description = _processDescription(code);
+    var description = _processDescription(code, params);
     winston.log(severity, isoDate + '|' + code  + '|' + trace + '|' + description + '|' + req);
 }
 
@@ -55,13 +57,23 @@ function _serializeRequest(req){
     }
 }
 
-function _processDescription(code){
-    return "TBD: " + code;
-    //typeof LOG_CODES[code] == 'function' ? LOG_CODES[code](params) : LOG_CODES[code];
+function _processDescription(code, params){
+    var position = 0;
+    var description = applicationFile['codes'][code];
+    if(!code || !description) return 'no description';
+    if(!params || !(params instanceof Array) || params.length == 0) return description;
+
+    params.forEach(function(param){
+        description = description.replace("%"+position, param);
+        position++;
+    });
+
+    return description;
 }
 
 module.exports = {
-    setUp : setup,
-    setup : setup,
-    log   : log
+    setUp               : setup,
+    setup               : setup,
+    log                 : log,
+    _processDescription : _processDescription
 };
