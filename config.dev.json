@@ -1,0 +1,11 @@
+{
+  "environment": {
+    "port": 5000
+  },
+  "logging": {
+    "default": {
+      "transport": "file",
+      "path": "application.log"
+    }
+  }
+}
