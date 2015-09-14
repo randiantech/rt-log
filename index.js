@@ -2,8 +2,12 @@ var winston = require('winston');
 var stringify = require('json-stringify-safe');
 var environment = process.env.RT_ENV || 'dev';
 
+/* default code */
 const DEFAULT_CODE = 'I0000';
+
+/* default descr message */
 const DEFAULT_NO_DESCRIPTION_MESSAGE = 'no description';
+
 const DEFAULT_SEVERITY = 'info';
 const DEFAULT_TRACE_MESSAGE = 'no trace id';
 
@@ -19,6 +23,7 @@ var applicationFile = require(APPLICATION_FILE_PATH);
  * -> Set up logger transporters
  */
 function setup(){
+    console.log("test");
     Object.keys(configFile['logging']).forEach(function(identifier){
         var type = configFile['logging'][identifier]['transport'].toLowerCase();
         var path = configFile['logging'][identifier]['path'];
